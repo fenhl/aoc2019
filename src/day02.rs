@@ -1,41 +1,30 @@
-use std::num::ParseIntError;
-
-fn run(program: &mut [usize]) {
-    let mut ip = 0;
-    loop {
-        match program[ip] {
-            1 => { program[program[ip + 3]] = program[program[ip + 1]] + program[program[ip + 2]]; }
-            2 => { program[program[ip + 3]] = program[program[ip + 1]] * program[program[ip + 2]]; }
-            99 => { return; }
-            v => { panic!("unknown opcode {} at position {}", v, ip); }
-        }
-        ip += 4;
-    }
-}
+use {
+    std::num::ParseIntError,
+    crate::intcode::Program
+};
 
 #[aoc_generator(day2)]
-pub fn gen(input: &str) -> Result<Vec<usize>, ParseIntError> {
-    input.split(',').map(str::parse).collect()
+pub fn gen(input: &str) -> Result<Program, ParseIntError> {
+    input.parse()
 }
 
-fn replace_and_run(program: &[usize], noun: usize, verb: usize) -> usize {
-    let mut program = program.iter().copied().collect::<Vec<_>>();
+fn replace_and_run(program: &mut Program, noun: isize, verb: isize) -> isize {
     program[1] = noun;
     program[2] = verb;
-    run(&mut program);
+    program.run();
     program[0]
 }
 
 #[aoc(day2, part1)]
-pub fn part1(input: &[usize]) -> usize {
-    replace_and_run(input, 12, 2)
+pub fn part1(input: &Program) -> isize {
+    replace_and_run(&mut input.clone(), 12, 2)
 }
 
 #[aoc(day2, part2)]
-pub fn part2(input: &[usize]) -> usize {
+pub fn part2(input: &Program) -> isize {
     for noun in 0..=99 {
         for verb in 0..=99 {
-            if replace_and_run(input, noun, verb) == 19690720 {
+            if replace_and_run(&mut input.clone(), noun, verb) == 19690720 {
                 return 100 * noun + verb;
             }
         }
