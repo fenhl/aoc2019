@@ -1,5 +1,1 @@
-These are my solutions to 2019's [Advent of Code](https://adventofcode.com/) puzzles.
-
-I'm writing most of these while watching [scy's Advent of Code](https://github.com/scy/advent-of-code) streams, so some parts may be inspired or taken from there.
-
-To run, use [`cargo aoc`](https://crates.io/crates/cargo-aoc).
+My solutions to some of 2019's Advent of Code puzzles. This repository is archived in favor of [fenhl/aoc](https://github.com/fenhl/aoc) which includes solutions to more puzzles from 2019 as well as those from other years.
